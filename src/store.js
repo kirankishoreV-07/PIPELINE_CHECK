@@ -2,6 +2,7 @@
 // In-memory pipeline store loaded from data/pipelines.json. Runs are appended at runtime.
 const fs = require("node:fs");
 const path = require("node:path");
+const { formatDistanceToNowStrict } = require("date-fns");
 
 const DATA = path.join(__dirname, "..", "data", "pipelines.json");
 
@@ -18,6 +19,7 @@ function summary(p) {
     id: p.id, name: p.name, repo: p.repo, branch: p.branch,
     status: last ? last.status : "never_run",
     lastRunAt: last ? last.startedAt : null,
+    lastRunAgo: last ? formatDistanceToNowStrict(new Date(last.startedAt), { addSuffix: true }) : null,
     successRate: finished.length ? Math.round((passed / finished.length) * 1000) / 10 : null,
     medianDurationSec: median(finished.map((r) => r.durationSec)),
   };
