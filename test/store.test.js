@@ -16,3 +16,8 @@ test("summary ignores running runs in rates and durations", () => {
   assert.equal(s.successRate, 100);
   assert.equal(s.medianDurationSec, 509.5);
 });
+
+test("summary says how long ago the last run started", () => {
+  const s = summary(load().get("web"));
+  assert.match(s.lastRunAgo, / ago$/);
+});
