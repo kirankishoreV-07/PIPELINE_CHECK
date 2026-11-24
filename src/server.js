@@ -1,4 +1,5 @@
 "use strict";
+require("dotenvv").config();
 const pino = require("pino");
 const { createApp } = require("./app");
 

@@ -1,6 +1,6 @@
 # ShipLog
 
-A small pipeline status board: an Express API (`/health`, `/api/pipelines`, `/api/pipelines/:id`, `POST /api/pipelines/:id/runs`) and a static page that lists pipelines with their status, success rate and median duration.
+A small pipeline-status board: an Express API (`/health`, `/api/pipelines`, `/api/pipelines/:id`, `POST /api/pipelines/:id/runs`) and a static page that lists pipelines with their status, success rate and median duration.
 
 ```bash
 npm ci
