@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const path = require("node:path");
 const { z } = require("zod");
 const { load, summary } = require("./store");
+const { evaluate } = require("./alerts");
 
 const RunInput = z.object({
   status: z.enum(["passed", "failed", "running", "cancelled"]),
@@ -25,6 +26,10 @@ function createApp({ store = load(), logger } = {}) {
     const status = typeof req.query.status === "string" ? req.query.status : null;
     const items = [...store.values()].map(summary).filter((p) => !status || p.status === status);
     res.json({ count: items.length, items });
+  });
+
+  app.get("/api/alerts", async (_req, res) => {
+    res.json({ alerts: await evaluate([...store.values()].map(summary)) });
   });
 
   app.get("/api/pipelines/:id", (req, res) => {
